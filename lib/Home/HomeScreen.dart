@@ -1,7 +1,10 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:tasksmanager/AppColor.dart';
-import 'package:tasksmanager/Home/listsTasks.dart';
 import 'package:tasksmanager/Home/settings.dart';
+import 'package:tasksmanager/widgets/bottomSheet.dart';
+import 'package:tasksmanager/Home/taskListTab.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route_Name = "HomeScreen";
@@ -12,17 +15,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-  List<Widget> screens = [const ListTasks(), const Settings()];
+  List<Widget> screens = [TaskListTab(), Settings()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryLightColor,
         title: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 8,
-          ),
+          padding: const EdgeInsets.only(top: 25),
           child: Text(
             "Tasks Manager",
             style: Theme.of(context).textTheme.titleLarge,
@@ -30,8 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 5,
+        notchMargin: 8,
         child: BottomNavigationBar(
+          iconSize: 30,
           currentIndex: currentIndex,
           onTap: (value) {
             currentIndex = value;
@@ -51,24 +52,31 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onfloatingButtonClick,
         child: const Icon(
           Icons.add,
-          
           color: AppColor.whiteColor,
         ),
       ),
       body: Column(
         children: [
           Container(
+            height: 30,
             color: AppColor.primaryLightColor,
-            height: 50,
           ),
+    
           Expanded(
             child: screens[currentIndex],
           ),
         ],
       ),
+    );
+  }
+
+  onfloatingButtonClick() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) => ShowBottomSheetItems(),
     );
   }
 }

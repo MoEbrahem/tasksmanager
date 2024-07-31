@@ -9,4 +9,6 @@ class AppColor {
   static const Color unselectIconColor = Color(0xffC8C9CB);
   static const Color whiteColor = Color(0xffFFFFFF);
   static const Color hintText = Color(0xffA9A9A9);
+  static const Color darkBackgroundColor = Color(0xff060E1E);
+  
 }

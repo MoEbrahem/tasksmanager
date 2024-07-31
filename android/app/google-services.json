@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "171213334629",
+    "project_id": "todo-tasks-manager-767df",
+    "storage_bucket": "todo-tasks-manager-767df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171213334629:android:e1d6880a7e7028c8417e8c",
+        "android_client_info": {
+          "package_name": "com.example.tasksmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1bQXg8SUs4mR9KOzEsFiRN6tcgIZZ71k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
