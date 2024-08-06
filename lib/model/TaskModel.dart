@@ -1,7 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Task {
+  static String collectionName = "tasks";
   String id;
   String title;
   String desc;
@@ -15,9 +15,6 @@ class Task {
     this.isDone = false,
   });
 
-
-    
-  
   Map<String, dynamic> toFireStore() {
     return {
       "id": id,
@@ -27,14 +24,13 @@ class Task {
       "isDone": isDone,
     };
   }
-    Task.fromFireStore(Map<String, dynamic> json) :this(
-    id: json["id"] as String,
-    title: json["title"] as String,
-    desc: json["desc"] as String,
-    dateTime: (json["dateTime"]as Timestamp).toDate(),
-    isDone: json["isDone"] ,
-    );
-    
 
-
+  Task.fromFireStore(Map<String, dynamic> json)
+      : this(
+          id: json["id"] as String,
+          title: json["title"] as String,
+          desc: json["desc"] as String,
+          dateTime: (json["dateTime"] as Timestamp).toDate(),
+          isDone: json["isDone"],
+        );
 }

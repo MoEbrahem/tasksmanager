@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/AppColor.dart';
+import 'package:tasksmanager/constants/AppColor.dart';
+import 'package:tasksmanager/constants/dialog_utils.dart';
 import 'package:tasksmanager/firebase_utils.dart';
 import 'package:tasksmanager/model/TaskModel.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/provider/authProvider.dart';
+import 'package:tasksmanager/provider/provider.dart';
 import 'package:tasksmanager/widgets/editTask.dart';
 
 class ItemListTasks extends StatelessWidget {
@@ -17,6 +19,7 @@ class ItemListTasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
+    var authprovider = Provider.of<Authprovider>(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
@@ -37,11 +40,21 @@ class ItemListTasks extends StatelessWidget {
             SlidableAction(
               borderRadius: BorderRadius.circular(10),
               onPressed: (context) {
-                FirebaseUtils.deleteTaskFromFireStore(task).timeout(
+                FirebaseUtils.deleteTaskFromFireStore(
+                        task, 
+                        authprovider.userModel!.id)
+                    .then(
+                  (value) {
+                    print("Task Deleted Successfully");
+                    provider.getAllTasksFromFireStore(
+                        authprovider.userModel!.id);
+                  },
+                )
+
+                .timeout(
                   const Duration(seconds: 2),
                   onTimeout: () {
-                    print("Task Deleted Successfully");
-                    provider.getAllTasksFromFireStore();
+                    DialogUtils.showtoastMessage("Task Deleted Successfully");
                   },
                 );
               },
@@ -121,7 +134,8 @@ class ItemListTasks extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       onPressed: () {
-                        provider.onPressDone(task);
+                        provider.onPressDone(
+                            task, authprovider.userModel?.id ?? '');
                       },
                       child: const Icon(
                         Icons.done,

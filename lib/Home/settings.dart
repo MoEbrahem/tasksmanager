@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/provider/provider.dart';
 import 'package:tasksmanager/widgets/languagesList.dart';
 import 'package:tasksmanager/widgets/themeModeBottomSheet.dart';
 

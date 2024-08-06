@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/AppColor.dart';
-import 'package:tasksmanager/firebase_utils.dart';
+import 'package:tasksmanager/constants/AppColor.dart';
 import 'package:tasksmanager/model/TaskModel.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/provider/authProvider.dart';
+import 'package:tasksmanager/provider/provider.dart';
 
 class EditTaskItem extends StatefulWidget {
   Task task;
@@ -15,10 +15,12 @@ class EditTaskItem extends StatefulWidget {
 
 class _EditTaskItemState extends State<EditTaskItem> {
   late MyProvider provider;
+  late Authprovider authprovider;
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<MyProvider>(context);
+    authprovider = Provider.of<Authprovider>(context);
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -158,7 +160,7 @@ class _EditTaskItemState extends State<EditTaskItem> {
         isDone: widget.task.isDone,
       );
 
-      provider.onpressEdit(task);
+      provider.onpressEdit(task,authprovider.userModel!.id);
       Navigator.pop(context);
     }
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/AppColor.dart';
+import 'package:tasksmanager/constants/AppColor.dart';
 import 'package:tasksmanager/firebase_utils.dart';
 import 'package:tasksmanager/model/TaskModel.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/provider/authProvider.dart';
+import 'package:tasksmanager/provider/provider.dart';
 
 class ShowBottomSheetItems extends StatefulWidget {
   @override
@@ -16,9 +17,11 @@ class _ShowBottomSheetItemsState extends State<ShowBottomSheetItems> {
   TextEditingController desc = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   late MyProvider provider;
+  late Authprovider authprovider;
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<MyProvider>(context);
+    authprovider = Provider.of<Authprovider>(context);
 
     double height = MediaQuery.of(context).size.height;
 
@@ -142,13 +145,13 @@ class _ShowBottomSheetItemsState extends State<ShowBottomSheetItems> {
         desc: desc.text,
         dateTime: provider.selectedDate,
       );
-      FirebaseUtils.addTasktoFireStore(task).timeout(
-        const Duration(seconds: 1),
-        onTimeout: () {
+      FirebaseUtils.addTasktoFireStore(task,authprovider.userModel?.id??"").then(
+        (value){
           print("Task added Successfully");
-          provider.getAllTasksFromFireStore();
-
           Navigator.pop(context);
+          provider.getAllTasksFromFireStore(authprovider.userModel?.id??'');
+          
+          
         },
       );
     }
