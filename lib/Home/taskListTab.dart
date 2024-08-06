@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/provider/authProvider.dart';
+import 'package:tasksmanager/provider/provider.dart';
 import 'package:tasksmanager/widgets/itemlistsTasks.dart';
 
 class TaskListTab extends StatefulWidget {
@@ -15,8 +16,10 @@ class _TaskListTabState extends State<TaskListTab> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
+    var authprovider = Provider.of<Authprovider>(context);
     if (provider.tasksList.isEmpty) {
-      provider.getAllTasksFromFireStore();
+      provider.getAllTasksFromFireStore(authprovider.userModel?.id??"");
+      
     }
     return Column(
       children: [
@@ -25,7 +28,7 @@ class _TaskListTabState extends State<TaskListTab> {
           child: EasyDateTimeLine(
             initialDate: provider.selectedDate,
             onDateChange: (selectedDate) {
-              provider.changeSelectDate(selectedDate);
+              provider.changeSelectDate(selectedDate,authprovider.userModel?.id??"");
             },
             headerProps:  EasyHeaderProps(
               selectedDateStyle: Theme.of(context).textTheme.headlineSmall,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasksmanager/AppColor.dart';
-import 'package:tasksmanager/provider.dart';
+import 'package:tasksmanager/constants/AppColor.dart';
+import 'package:tasksmanager/provider/provider.dart';
 
 class ThemeModeBottomSheet extends StatefulWidget {
   const ThemeModeBottomSheet({super.key});
